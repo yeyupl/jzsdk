@@ -1,0 +1,21 @@
+{
+  "name": "jzsdk",
+  "description": "The SDK Of JingZhuan OA System.",
+  "license": "MIT",
+  "homepage": "https://oa.jingzhuan.cn",
+  "authors": [
+    {
+      "name": "YEYUPL",
+      "email": "yeyupl@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "jzsdk\\": ""
+    }
+  }
+}
