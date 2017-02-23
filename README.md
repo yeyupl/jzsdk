@@ -9,7 +9,7 @@ $config = array(
         'url' => 'http://oa.jingzhuan.cn/server/', //API请求地址
         'debug' => false, //是否启用debug模式
         );
-$client = new \jzsdk\client($config);
+$client = new \jzoa\sdk\client($config);
 
 $client->api = 'common.base.staff.getStaffById';
 $client->staff_id = 1000;

@@ -3,7 +3,7 @@
  * SDK客户端请求类
  * @author 罗会铸 yeyupl@qq.com
  */
-namespace jzsdk;
+namespace jzoa\sdk;
 
 class client {
 
