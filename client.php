@@ -89,10 +89,11 @@ class client {
         return $this->_url;
     }
 
+
     /**
-     * 发送请求数据
+     * 发送请求
      * @param string $mode
-     * @return $this
+     * @return string
      */
     private function send($mode = 'get') {
         $this->_ts = time();
@@ -114,7 +115,7 @@ class client {
         if ($response->getStatusCode() == 200) {
             $this->_data = $response->getBody()->getContents();
         }
-        return $this;
+        return $this->_data;
     }
 
 
@@ -139,20 +140,19 @@ class client {
 
     /**
      * 用GET方式请求
-     * @return mixed
+     * @return string
      */
     public function get() {
-        $this->send('get');
-        return $this->_data;
+        return $this->send('get');
     }
+
 
     /**
      * 用POST方式请求
-     * @return mixed
+     * @return string
      */
     public function post() {
-        $this->send('post');
-        return $this->_data;
+        return $this->send('post');
     }
 
 }
