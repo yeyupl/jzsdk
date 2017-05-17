@@ -2,7 +2,7 @@
   "name": "jzsdk/jzsdk",
   "description": "The SDK Of JingZhuan OA System.",
   "license": "MIT",
-  "homepage": "https://oa.jingzhuan.cn",
+  "homepage": "http://www.jingzhuan.cn",
   "authors": [
     {
       "name": "YEYUPL",
@@ -15,7 +15,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.1-dev"
+      "dev-master": "1.2-dev"
     }
   },
   "minimum-stability": "dev",
