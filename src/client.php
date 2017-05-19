@@ -67,7 +67,7 @@ class client {
      * @return array
      */
     public function getParams() {
-        return $this->_params;
+        return $this->array_trim($this->_params);
     }
 
 
@@ -104,7 +104,7 @@ class client {
             'ts' => $this->_ts,
             'debug' => $this->_config['debug']
         );
-        $this->_params = array_merge($this->_params, $sysParams);
+        $this->_params = array_merge($this->getParams(), $sysParams);
         $this->_url = $this->_config['url'];
 
         if (strtolower($mode) == 'get') {
@@ -126,7 +126,7 @@ class client {
      */
     private function createSign() {
         $params = array();
-        foreach ($this->_params as $key => $val) {
+        foreach ($this->getParams() as $key => $val) {
             if (!in_array($key, array('key', 'api', 'sign', 'ts', 'debug'))) {
                 $params[$key] = $val;
             }
@@ -172,4 +172,18 @@ class client {
         return $this->send('post');
     }
 
+
+    /**
+     * 数组去空格
+     * @param $array
+     * @return array
+     */
+    private function array_trim($array) {
+        if (is_array($array)) {
+            foreach ($array as $k => $v) {
+                $array[$k] = trim($v);
+            }
+        }
+        return $array;
+    }
 }
