@@ -179,11 +179,9 @@ class client {
      * @return array
      */
     private function array_trim($array) {
-        if (is_array($array)) {
-            foreach ($array as $k => $v) {
-                $array[$k] = trim($v);
-            }
+        if (!is_array($array)) {
+            return trim($array);
         }
-        return $array;
+        return array_map([$this, 'array_trim'], $array);
     }
 }
