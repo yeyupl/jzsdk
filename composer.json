@@ -1,5 +1,5 @@
 {
-  "name": "jzsdk/jzsdk",
+  "name": "jzweb/jzoa",
   "description": "The SDK Of JingZhuan OA System.",
   "license": "MIT",
   "homepage": "http://www.jingzhuan.cn",
@@ -12,11 +12,6 @@
   "require": {
     "php": ">=5.5.0",
     "guzzlehttp/guzzle": "~6.0"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.3-dev"
-    }
   },
   "minimum-stability": "dev",
   "autoload": {
