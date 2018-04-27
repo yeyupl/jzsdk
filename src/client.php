@@ -6,7 +6,8 @@
 
 namespace jzsdk;
 
-class client {
+class client
+{
 
     private $_http;
     private $_config;
@@ -26,7 +27,8 @@ class client {
      *   'debug' => false, //是否启用debug模式
      *  );
      */
-    public function __construct(array $config) {
+    public function __construct(array $config)
+    {
         $this->_config = $config;
         $this->_http = new \GuzzleHttp\Client();
     }
@@ -36,7 +38,8 @@ class client {
      * @param $name
      * @return mixed
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         return $this->_params[$name];
     }
 
@@ -45,7 +48,8 @@ class client {
      * @param $name
      * @param $value
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         if ($this->_data) {
             $this->_params = array();
             $this->_data = null;
@@ -57,7 +61,8 @@ class client {
      * 删除参数
      * @param $name
      */
-    public function __unset($name) {
+    public function __unset($name)
+    {
         unset($this->_params[$name]);
     }
 
@@ -66,7 +71,8 @@ class client {
      * 取得当前请求参数
      * @return array
      */
-    public function getParams() {
+    public function getParams()
+    {
         return $this->array_trim($this->_params);
     }
 
@@ -75,7 +81,8 @@ class client {
      * 批量设置请求参数 必须为关联数组
      * @param $params
      */
-    public function setParams($params) {
+    public function setParams($params)
+    {
         if (is_array($params)) {
             $this->_params = array_merge($this->_params, $params);
         }
@@ -86,17 +93,36 @@ class client {
      * 获得当前请求的url (用于调试，适用于用GET方法的请求)
      * @return mixed
      */
-    public function getUrl() {
+    public function getUrl()
+    {
         return $this->_url;
     }
 
+    /**
+     * 用GET方式请求
+     * @return string
+     */
+    public function get()
+    {
+        return $this->send('get');
+    }
+
+    /**
+     * 用POST方式请求
+     * @return string
+     */
+    public function post()
+    {
+        return $this->send('post');
+    }
 
     /**
      * 发送请求
      * @param string $mode
      * @return string
      */
-    private function send($mode = 'get') {
+    private function send($mode = 'get')
+    {
         $this->_ts = time();
         $sysParams = array(
             'key' => $this->_config['key'],
@@ -119,12 +145,12 @@ class client {
         return $this->_data;
     }
 
-
     /**
      * 对请求签名
      * @return string
      */
-    private function createSign() {
+    private function createSign()
+    {
         $params = array();
         foreach ($this->getParams() as $key => $val) {
             if (!in_array($key, array('key', 'api', 'sign', 'ts', 'debug'))) {
@@ -139,16 +165,16 @@ class client {
         return md5($this->_config['prefix'] . $this->_config['key'] . $this->_config['secret'] . $this->_params['api'] . $this->_ts . $paramsStr);
     }
 
-
     /**
      * 多维按key排序
      * @param $array
      * @return mixed
      */
-    private function deepKsort($array) {
+    private function deepKsort($array)
+    {
         foreach ($array as $k => $v) {
             if (is_array($v)) {
-                $array[$k] = deepKsort($v);
+                $array[$k] = $this->deepKsort($v);
             }
         }
         ksort($array);
@@ -156,29 +182,12 @@ class client {
     }
 
     /**
-     * 用GET方式请求
-     * @return string
-     */
-    public function get() {
-        return $this->send('get');
-    }
-
-
-    /**
-     * 用POST方式请求
-     * @return string
-     */
-    public function post() {
-        return $this->send('post');
-    }
-
-
-    /**
      * 数组去空格
      * @param $array
      * @return array
      */
-    private function array_trim($array) {
+    private function array_trim($array)
+    {
         if (!is_array($array)) {
             return trim($array);
         }
