@@ -26,11 +26,12 @@ class client
      *   'url' => 'http://oa.jingzhuan.cn/server/', //API请求地址
      *   'debug' => false, //是否启用debug模式
      *  );
+     * @param array $clientConfig
      */
-    public function __construct(array $config)
+    public function __construct(array $config, array $clientConfig = [])
     {
         $this->_config = $config;
-        $this->_http = new \GuzzleHttp\Client();
+        $this->_http = new \GuzzleHttp\Client($clientConfig);
     }
 
     /**
@@ -66,29 +67,6 @@ class client
         unset($this->_params[$name]);
     }
 
-
-    /**
-     * 取得当前请求参数
-     * @return array
-     */
-    public function getParams()
-    {
-        return $this->array_trim($this->_params);
-    }
-
-
-    /**
-     * 批量设置请求参数 必须为关联数组
-     * @param $params
-     */
-    public function setParams($params)
-    {
-        if (is_array($params)) {
-            $this->_params = array_merge($this->_params, $params);
-        }
-    }
-
-
     /**
      * 获得当前请求的url (用于调试，适用于用GET方法的请求)
      * @return mixed
@@ -105,15 +83,6 @@ class client
     public function get()
     {
         return $this->send('get');
-    }
-
-    /**
-     * 用POST方式请求
-     * @return string
-     */
-    public function post()
-    {
-        return $this->send('post');
     }
 
     /**
@@ -166,6 +135,39 @@ class client
     }
 
     /**
+     * 取得当前请求参数
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->array_trim($this->_params);
+    }
+
+    /**
+     * 批量设置请求参数 必须为关联数组
+     * @param $params
+     */
+    public function setParams($params)
+    {
+        if (is_array($params)) {
+            $this->_params = array_merge($this->_params, $params);
+        }
+    }
+
+    /**
+     * 数组去空格
+     * @param $array
+     * @return array
+     */
+    private function array_trim($array)
+    {
+        if (!is_array($array)) {
+            return trim($array);
+        }
+        return array_map([$this, 'array_trim'], $array);
+    }
+
+    /**
      * 多维按key排序
      * @param $array
      * @return mixed
@@ -182,15 +184,11 @@ class client
     }
 
     /**
-     * 数组去空格
-     * @param $array
-     * @return array
+     * 用POST方式请求
+     * @return string
      */
-    private function array_trim($array)
+    public function post()
     {
-        if (!is_array($array)) {
-            return trim($array);
-        }
-        return array_map([$this, 'array_trim'], $array);
+        return $this->send('post');
     }
 }
